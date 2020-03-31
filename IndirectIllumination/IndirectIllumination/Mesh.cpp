@@ -3,12 +3,14 @@
 Mesh::Mesh(){}
 Mesh::~Mesh(){}
 
-Mesh::Mesh(const std::string name, glm::vec3 pos)
+Mesh::Mesh(const std::string name, glm::vec3 pos, Material* mat, Texture2D* tex)
 {
 	data = LoadMesh(name);	
 	vao = data.mVao;
 	mode = complex;
 	transform = new Transform(pos, glm::vec3(data.mScaleFactor));
+	material = mat;
+	texture = tex;
 }
 
 void Mesh::uploadTransformMatrix(GLuint program)

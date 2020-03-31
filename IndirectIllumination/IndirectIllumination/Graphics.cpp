@@ -13,9 +13,10 @@ void Graphics::init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
     reload_shader();
-    meshes.push_back(new Mesh(mesh_name, glm::vec3(0)));
-    meshes.push_back(new Mesh(mesh_name, glm::vec3(0.2f)));
+    meshes.push_back(new Mesh(mesh_name,glm::vec3(0),Material::Pink()));
+    meshes.push_back(new Mesh(mesh_name, glm::vec3(0.2f), Material::Orange()));
     meshes[1]->transform->Rotate(60.f, glm::vec3(0, 1, 0));
+    meshes[0]->texture = new Texture2D("tex", fish_texture);
 }
 
 void Graphics::render() {
@@ -41,6 +42,8 @@ void Graphics::render() {
     std::vector<Mesh*>::iterator it = meshes.begin();
     for (it; it < meshes.end(); it++) {
         (*it)->uploadTransformMatrix(shader_program);
+        (*it)->material->upload(shader_program);
+        (*it)->texture->activate(shader_program, GL_TEXTURE0);
         (*it)->render();
     }
 

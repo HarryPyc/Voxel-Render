@@ -16,6 +16,7 @@
 static const std::string vertex_shader("shader/template_vs.glsl");
 static const std::string fragment_shader("shader/template_fs.glsl");
 static const std::string mesh_name = "model/Amago0.obj";
+static const std::string fish_texture = "texture/AmagoT.bmp";
 class Graphics
 {
 public:
