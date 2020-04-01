@@ -12,12 +12,12 @@ void mouse(int button, int state, int x, int y);
 void Application::init(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(5, 5);
+	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	window = glutCreateWindow(title);
 
 	graphics = new Graphics();
-	controller = new FPSController();
+	controller = new FPSController(graphics->scene->cam, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//init OpenGL
 	glutDisplayFunc(display);
@@ -44,6 +44,7 @@ Application& Application::getInstance() {
 void display() {
 	auto& app = Application::getInstance();
 	app.graphics->render();
+	app.controller->update();
 }
 
 void idle() {

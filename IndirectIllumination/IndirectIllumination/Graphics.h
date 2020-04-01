@@ -13,6 +13,7 @@
 #include <InitShader.h>
 #include "GUI.h"
 #include "Mesh.h"
+#include "Scene.h"
 static const std::string vertex_shader("shader/template_vs.glsl");
 static const std::string fragment_shader("shader/template_fs.glsl");
 static const std::string mesh_name = "model/Amago0.obj";
@@ -23,8 +24,8 @@ public:
 	Graphics();
 	~Graphics();
 
-	std::vector<Mesh*> meshes;
 	GLuint shader_program;
+	Scene* scene;
 	GUI* gui;
 	void init();
 	

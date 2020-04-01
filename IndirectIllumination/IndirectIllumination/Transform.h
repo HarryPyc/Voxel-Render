@@ -7,7 +7,7 @@
 class Transform
 {
 public:
-	Transform(glm::vec3 pos, glm::vec3 s);
+	Transform(glm::vec3 pos = glm::vec3(0), glm::vec3 s = glm::vec3(1));
 	glm::mat4 R, T, S, M;
 	void Translate(glm::vec3 trans);
 	void Rotate(float angle, glm::vec3 axis);

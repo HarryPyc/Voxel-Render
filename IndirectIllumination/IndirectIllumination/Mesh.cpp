@@ -1,8 +1,18 @@
 #include "Mesh.h"
 
 Mesh::Mesh(){}
+
 Mesh::~Mesh(){}
 
+Mesh::Mesh(SimpleShapes* _shape, glm::vec3 pos, Material* mat, Texture2D* tex)
+{
+	vao = _shape->vao;
+	shape = _shape;
+	mode = simple;
+	transform = new Transform(pos);
+	material = mat;
+	texture = tex;
+}
 Mesh::Mesh(const std::string name, glm::vec3 pos, Material* mat, Texture2D* tex)
 {
 	data = LoadMesh(name);	
@@ -29,6 +39,6 @@ void Mesh::render() {
 		data.DrawMesh();
 	}
 	else if (mode == simple) {
-		/*glDrawElements(GL_TRIANGLES, )*/
+		glDrawElements(GL_TRIANGLE_STRIP, shape->N, GL_UNSIGNED_INT, 0);
 	}
 }

@@ -2,7 +2,6 @@
 
 Graphics::Graphics() {
 	init();
-	gui = new GUI();
 }
 
 Graphics::~Graphics()
@@ -13,10 +12,17 @@ void Graphics::init() {
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
     reload_shader();
-    meshes.push_back(new Mesh(mesh_name,glm::vec3(0),Material::Pink()));
-    meshes.push_back(new Mesh(mesh_name, glm::vec3(0.2f), Material::Orange()));
-    meshes[1]->transform->Rotate(60.f, glm::vec3(0, 1, 0));
-    meshes[0]->texture = new Texture2D("tex", fish_texture);
+    gui = new GUI();
+    //create scene
+    scene = new Scene();
+    Mesh* fish1 = new Mesh(mesh_name,glm::vec3(0),Material::Pink());
+    Mesh* fish2 = new Mesh(mesh_name, glm::vec3(0.2f), Material::Orange());
+    fish1->transform->Rotate(60.f, glm::vec3(0, 1, 0));
+    fish2->texture = new Texture2D("tex", fish_texture);
+    Mesh* quad = new Mesh(SimpleShapes::Quad());
+    scene->addMesh(fish1);
+    scene->addMesh(fish2);
+    scene->addMesh(quad);
 }
 
 void Graphics::render() {
@@ -24,28 +30,9 @@ void Graphics::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(shader_program);
 
-    const int w = glutGet(GLUT_WINDOW_WIDTH);
-    const int h = glutGet(GLUT_WINDOW_HEIGHT);
-    const float aspect_ratio = float(w) / float(h);
+    scene->cam->upload(shader_program, "PV");
 
-    
-    glm::mat4 V = glm::lookAt(glm::vec3(0.0f, 1.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f))
-        * glm::rotate(gui->angle, glm::vec3(0.0f, 1.0f, 0.0f));
-    glm::mat4 P = glm::perspective(3.141592f / 4.0f, aspect_ratio, 0.1f, 100.0f);
-
-    int PV_loc = glGetUniformLocation(shader_program, "PV");
-    if (PV_loc != -1)
-    {
-        glm::mat4 PV = P * V;
-        glUniformMatrix4fv(PV_loc, 1, false, glm::value_ptr(PV));
-    }
-    std::vector<Mesh*>::iterator it = meshes.begin();
-    for (it; it < meshes.end(); it++) {
-        (*it)->uploadTransformMatrix(shader_program);
-        (*it)->material->upload(shader_program);
-        (*it)->texture->activate(shader_program, GL_TEXTURE0);
-        (*it)->render();
-    }
+    scene->render(shader_program);
 
 	gui->render();
 
