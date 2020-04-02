@@ -24,6 +24,7 @@ void Camera::upload(GLuint program, const std::string name)
         glm::mat4 PV = P * V;
         glUniformMatrix4fv(PV_loc, 1, false, glm::value_ptr(PV));
     }
+    glUniform3fv(glGetUniformLocation(program, "camPos"), 1, &pos[0]);
 }
 
 Camera::Camera(glm::vec3 _pos, glm::vec3 _target, glm::vec3 _up)

@@ -2,7 +2,7 @@
 Transform::Transform(glm::vec3 pos, glm::vec3 s)
 {
 	T = glm::translate(pos);
-	R = glm::rotate(0.f, glm::vec3(0, 1, 0));
+	R = glm::rotate(0.f, glm::vec3(0, 0, 1));
 	S = glm::scale(s);
 	UpdateTransformMatrix();
 }

@@ -13,7 +13,7 @@ public:
 	~FPSController();
 	float mouseSensitivity = 0.5f;
 	float step = 0.05f;
-	float hor = 0, ver = 0;
+	float hor = 0, ver = 0, gravity = 0;
 	glm::vec3 right() { return glm::cross(cam->dir, cam->up); }
 	void Move();
 	Camera* cam;

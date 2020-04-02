@@ -14,7 +14,9 @@ void GUI::init()
 void GUI::render()
 {
 	ImGui_ImplGlut_NewFrame();
-	ImGui::SliderFloat("View Angle", &angle, -3.141592f, 3.141592f);
+	ImGui::Begin("Console");
+	ImGui::Image((void*)test_tex, ImVec2(256, 256));
 
+	ImGui::End();
 	ImGui::Render();
 }

@@ -18,7 +18,7 @@ public:
 	GLuint vao;
 	int N;
 
-	static SimpleShapes* Quad();
+	static SimpleShapes* Quad(float size = 1.f);
 	SimpleShapes() {};
 private:
 	GLuint vbo, ebo;

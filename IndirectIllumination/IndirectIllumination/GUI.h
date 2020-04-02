@@ -1,5 +1,6 @@
 #pragma once
 #include <imgui_impl_glut.h>
+#include <GL/glew.h>
 class GUI
 {
 public:
@@ -8,7 +9,6 @@ public:
 	void init();
 
 	void render();
-
-	float angle = 0.f;
+	GLuint test_tex;
 };
 

@@ -25,7 +25,7 @@ void FPSController::update() {
 }
 void FPSController::Move()
 {
-	cam->pos += (hor*right() + ver*cam->dir) * step;
+	cam->pos += (hor*right() + ver*cam->dir + gravity*cam->up) * step;
 }
 void FPSController::OnMouseMove(int x, int y)
 {
@@ -61,6 +61,12 @@ void FPSController::keyboard(unsigned char key, int x, int y)
 	case 'd':
 		hor = 1.0f;
 		break;
+	case 'e':
+		gravity = 1.0f;
+		break;
+	case 'q':
+		gravity = -1.0f;
+		break;
 	case 'm':
 		useCursor = !useCursor;
 		SetCursorPos(mouseX, mouseY);
@@ -86,6 +92,12 @@ void FPSController::keyboard_up(unsigned char key, int x, int y)
 		break;
 	case 'd':
 		hor = 0.0f;
+		break;
+	case 'e':
+		gravity = 0.0f;
+		break;
+	case 'q':
+		gravity = 0.0f;
 		break;
 	default:
 		break;

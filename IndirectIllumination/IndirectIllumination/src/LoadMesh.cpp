@@ -143,8 +143,8 @@ void BufferIndexedVerts(MeshData& meshdata)
 
    //shader attrib locations
    const int pos_loc = 0;
-   const int tex_coord_loc = 1;
-   const int normal_loc = 2;
+   const int normal_loc = 1;
+   const int tex_coord_loc = 2;
 
    glBindAttribLocation(program, pos_loc, "pos_attrib");
    glBindAttribLocation(program, tex_coord_loc, "tex_coord_attrib");
