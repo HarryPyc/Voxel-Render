@@ -34,7 +34,7 @@ void main(void)
 	fragcolor = texture2D(tex, tex_coord) * vec4(lightColor,1);
 }
 
-float attenuation(float d){ return 1.f/(1.f+0.1f*d+0.1f*d*d); }
+float attenuation(float d){ return 1.f/(1.f+0.5f*d+0.5f*d*d); }
 vec3 PhongLightingModel(PointLight light){
 	vec3 l = light.pos - pos;
 	float dist = length(l);

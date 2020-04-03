@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
-static const std::string mesh_name = "model/Amago0.obj";
-static const std::string fish_texture = "texture/AmagoT.bmp";
+static const std::string mesh_name = "model/Bunny.obj";
+
 
 static Scene* initMainScene(GLuint program) {
 	Scene* scene = new Scene();
@@ -20,9 +20,9 @@ static Scene* initMainScene(GLuint program) {
 	scene->addMesh(quad1); scene->addMesh(quad2); scene->addMesh(quad3);
 	scene->addMesh(quad4); scene->addMesh(quad5); scene->addMesh(quad6);
 
-	Mesh* fish = new Mesh(mesh_name);
-	fish->texture = new Texture2D("tex", fish_texture);
-	scene->addMesh(fish);
+	Mesh* bunny = new Mesh(mesh_name,glm::vec3(0,-0.5,0),Material::Orange());
+	bunny->transform->Scale(glm::vec3(2.0));
+	scene->addMesh(bunny);
 
 	scene->addLight(new PointLight(glm::vec3(0, 0.5, 0.5)));
 

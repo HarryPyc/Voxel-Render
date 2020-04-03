@@ -4,7 +4,7 @@ Texture3D::Texture3D(const std::string name, int w, int h, int d)
 {
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_3D, texture_id);
-	glTexStorage3D(GL_TEXTURE_3D, 0, GL_RGBA8, width, height, depth);
+	glTexStorage3D(GL_TEXTURE_3D, 7, GL_RGBA8, width, height, depth);
 	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, width, height, depth, 0, GL_RGBA, GL_FLOAT, 0);
 
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -12,7 +12,7 @@ Texture3D::Texture3D(const std::string name, int w, int h, int d)
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
+	glGenerateMipmap(GL_TEXTURE_3D);
 	glBindTexture(GL_TEXTURE_3D, 0);
 }
 

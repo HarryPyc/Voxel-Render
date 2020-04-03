@@ -15,6 +15,7 @@ void main(void)
    gl_Position = PV*M*vec4(pos_attrib, 1.0);
    pos = vec3(M*vec4(pos_attrib, 1.0));
    tex_coord = tex_coord_attrib;
-   normal = vec3(M*vec4(normal_attrib,0));
+   //normal = vec3(M*vec4(normal_attrib,0));
+   normal = mat3(transpose(inverse(M))) * normal_attrib;
    normal = normalize(normal);
 }

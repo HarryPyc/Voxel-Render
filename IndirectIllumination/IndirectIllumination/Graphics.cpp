@@ -27,7 +27,7 @@ void Graphics::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(shader_program);
 
-
+    scene->uploadLight(shader_program);
     scene->render(shader_program);
 
     
@@ -54,6 +54,6 @@ void Graphics::reload_shader()
             glDeleteProgram(shader_program);
         }
         shader_program = new_shader;
-
+        
     }
 }

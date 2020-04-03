@@ -24,8 +24,13 @@ void Scene::render(GLuint program)
 
 void Scene::init(GLuint program)
 {
-	cam = new Camera();
-    for(int i = 0; i< lights.size();i++) {
+    cam = new Camera();
+    uploadLight(program);
+}
+
+void Scene::uploadLight(GLuint program)
+{
+    for (int i = 0; i < lights.size(); i++) {
         lights[0]->upload(program, i);
     }
 }

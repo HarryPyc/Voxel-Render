@@ -15,6 +15,8 @@ public:
 
 	void render(GLuint program);
 	void init(GLuint program);
+	void uploadLight(GLuint program);
 	Scene() {}
+
 };
 

@@ -49,10 +49,18 @@ void display() {
 
 void idle() {
 	glutPostRedisplay();
+	const int time_ms = glutGet(GLUT_ELAPSED_TIME);
+	Timer::time = 0.001f * time_ms;
 }
 void keyboard(unsigned char key, int x, int y) {
 	auto& app = Application::getInstance();
 	app.controller->keyboard(key, x, y);
+	switch (key) {
+	case 'r':
+	case 'R':
+		app.graphics->reload_shader();
+		break;
+	}
 }
 void keyboard_up(unsigned char key, int x, int y) {
 	auto& app = Application::getInstance();

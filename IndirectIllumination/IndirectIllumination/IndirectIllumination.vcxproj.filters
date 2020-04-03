@@ -22,6 +22,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Shader\Voxelization">
+      <UniqueIdentifier>{1f85053b-30df-47bf-9088-12568835fb81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\imgui\imgui.cpp">
@@ -102,6 +105,9 @@
     <ClCompile Include="Texture3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\imgui\imconfig.h">
@@ -167,6 +173,9 @@
     <ClInclude Include="Texture3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\template_fs.glsl">
@@ -174,6 +183,15 @@
     </None>
     <None Include="shader\template_vs.glsl">
       <Filter>Shader</Filter>
+    </None>
+    <None Include="shader\Voexlization\voxel_fs.glsl">
+      <Filter>Shader\Voxelization</Filter>
+    </None>
+    <None Include="shader\Voexlization\voxel_gs.glsl">
+      <Filter>Shader\Voxelization</Filter>
+    </None>
+    <None Include="shader\Voexlization\voxel_vs.glsl">
+      <Filter>Shader\Voxelization</Filter>
     </None>
   </ItemGroup>
 </Project>

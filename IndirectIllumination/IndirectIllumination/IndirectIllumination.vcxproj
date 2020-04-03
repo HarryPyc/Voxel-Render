@@ -177,6 +177,7 @@
     <ClCompile Include="src\VideoMux.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="Texture3D.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,11 +201,15 @@
     <ClInclude Include="SimpleShapes.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Texture3D.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\template_fs.glsl" />
     <None Include="shader\template_vs.glsl" />
+    <None Include="shader\Voexlization\voxel_fs.glsl" />
+    <None Include="shader\Voexlization\voxel_gs.glsl" />
+    <None Include="shader\Voexlization\voxel_vs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

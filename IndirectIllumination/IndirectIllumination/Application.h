@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "FPSController.h"
+#include "Timer.h"
 class Application
 {
 public:
