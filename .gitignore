@@ -92,7 +92,7 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-
+!VoxelConeTracing/VoxelConeTracing/model/*.obj
 # Chutzpah Test files
 _Chutzpah*
 
