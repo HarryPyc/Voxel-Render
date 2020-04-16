@@ -20,6 +20,9 @@ public:
 	static Shader* RayTracingShader() {
 		return new Shader("shader/Visualization/raytracing.vert", "shader/Visualization/raytracing.frag");
 	}
+	static Shader* VCTShader() {
+		return new Shader("shader/VCT.vert", "shader/VCT.frag");
+	}
 	void reload_shader(GLuint new_shader);
 };
 

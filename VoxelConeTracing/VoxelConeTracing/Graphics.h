@@ -25,7 +25,7 @@ public:
 	~Graphics();
 	int w, h;
 	GLuint shader_program;
-	GLuint voxel_program, cubepos_program, raytracing_program;
+	GLuint voxel_program, cubepos_program, raytracing_program, VCT_program;
 	Scene* scene;
 	GUI* gui;
 	FBO* fbo;
@@ -34,11 +34,14 @@ public:
 	void render();
 private:
 	GLuint voxelSize = 64;
-	Texture3D *voxelTexture;
+	Texture3D *albedoVoxel, *normalVoxel;
 	void initVoxelization();
 	void Voxelization();
+	bool isVoxelized = false;
 	void initVoxelVisualization();
 	void voxelVisualization();
+	void initVoxelConeTracing();
+	void voxelConeTracing();
 
 	Mesh *cube, *quad;
 

@@ -25,8 +25,11 @@
     <Filter Include="Shader\Voxelization">
       <UniqueIdentifier>{1f85053b-30df-47bf-9088-12568835fb81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader\Visualization">
+    <Filter Include="Shader\Voxelization\Visualization">
       <UniqueIdentifier>{5ac0cd77-2edb-4152-95d3-9a251f266bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\VoxelConeTracing">
+      <UniqueIdentifier>{c2d620f3-d9ef-4bbd-8fe8-cbe1a9e91f53}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -185,16 +188,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="shader\Visualization\cube.frag">
-      <Filter>Shader\Visualization</Filter>
+      <Filter>Shader\Voxelization\Visualization</Filter>
     </None>
     <None Include="shader\Visualization\cube.vert">
-      <Filter>Shader\Visualization</Filter>
+      <Filter>Shader\Voxelization\Visualization</Filter>
     </None>
     <None Include="shader\Visualization\raytracing.frag">
-      <Filter>Shader\Visualization</Filter>
+      <Filter>Shader\Voxelization\Visualization</Filter>
     </None>
     <None Include="shader\Visualization\raytracing.vert">
-      <Filter>Shader\Visualization</Filter>
+      <Filter>Shader\Voxelization\Visualization</Filter>
     </None>
     <None Include="shader\Voxelization\voxel.frag">
       <Filter>Shader\Voxelization</Filter>
@@ -204,6 +207,12 @@
     </None>
     <None Include="shader\Voxelization\voxel.vert">
       <Filter>Shader\Voxelization</Filter>
+    </None>
+    <None Include="shader\VCT.frag">
+      <Filter>Shader\VoxelConeTracing</Filter>
+    </None>
+    <None Include="shader\VCT.vert">
+      <Filter>Shader\VoxelConeTracing</Filter>
     </None>
   </ItemGroup>
 </Project>

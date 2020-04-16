@@ -1,25 +1,25 @@
 #include "Texture3D.h"
 
-Texture3D::Texture3D(const std::string name, int w, int h, int d)
+Texture3D::Texture3D(const std::string name, int size, GLenum magFilter, GLenum minFilter,
+	GLint internalFormat, GLint type, GLint wrap)
 {
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_3D, texture_id);
 
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, wrap);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, wrap);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, wrap);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, minFilter);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, magFilter);
 	
-	const std::vector<GLfloat> buffer(4 * w * h * d, 0.0f);
-	glTexStorage3D(GL_TEXTURE_3D, 7, GL_RGBA8, w, h, d);
-	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, w, h, d, 0, GL_RGBA, GL_FLOAT, &buffer[0]);
+	glTexStorage3D(GL_TEXTURE_3D, 7, internalFormat, size, size, size);
+	glTexImage3D(GL_TEXTURE_3D, 0, internalFormat, size, size, size, 0, GL_RGBA, type, 0);
 	
 	glGenerateMipmap(GL_TEXTURE_3D);
 	glBindTexture(GL_TEXTURE_3D, 0);
-	width = w;
-	height = h;
-	depth = d;
+	width = size;
+	height = size;
+	depth = size;
 	texture_name = name;
 }
 

@@ -203,6 +203,8 @@
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shader\VCT.frag" />
+    <None Include="shader\VCT.vert" />
     <None Include="shader\Visualization\cube.frag" />
     <None Include="shader\Visualization\cube.vert" />
     <None Include="shader\Visualization\raytracing.frag" />

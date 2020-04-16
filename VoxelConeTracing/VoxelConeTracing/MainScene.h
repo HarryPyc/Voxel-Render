@@ -21,7 +21,7 @@ static Scene* initMainScene() {
 	scene->addMesh(quad4); scene->addMesh(quad5); scene->addMesh(quad6);
 
 	Mesh* bunny = new Mesh(mesh_name,glm::vec3(0,-0.5,0),Material::Orange());
-	bunny->transform->Scale(glm::vec3(2.0));
+	bunny->transform->Scale(glm::vec3(5.0));
 	scene->addMesh(bunny);
 
 	scene->addLight(new PointLight(glm::vec3(0, 0.5, 0.5)));
