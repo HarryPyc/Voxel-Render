@@ -35,8 +35,8 @@ void Graphics::render() {
 		isVoxelized = true;
 	}
 
-	voxelVisualization();
-	//voxelConeTracing();
+	//voxelVisualization();
+	voxelConeTracing();
 	gui->render();
 
     glutSwapBuffers();
@@ -58,12 +58,12 @@ void Graphics::Voxelization() {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
-	albedoVoxel->activate(voxel_program, 1);
-	glBindImageTexture(1, albedoVoxel->texture_id, 0, GL_TRUE, 0, GL_WRITE_ONLY, GL_RGBA8);
-	glGenerateMipmap(GL_TEXTURE_3D);
 	normalVoxel->activate(voxel_program, 0);
 	glBindImageTexture(0, normalVoxel->texture_id, 0, GL_TRUE, 0, GL_WRITE_ONLY, GL_RGBA16F);
+	albedoVoxel->activate(voxel_program, 1);
+	glBindImageTexture(1, albedoVoxel->texture_id, 0, GL_TRUE, 0, GL_WRITE_ONLY, GL_RGBA8);
 
+	scene->uploadLight(voxel_program);
 	scene->render(voxel_program);
 	glGenerateMipmap(GL_TEXTURE_3D);
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -78,7 +78,7 @@ void Graphics::initVoxelVisualization()
 	// FBOs.
 	fbo = new FBO(2);
 	// Rendering cube.
-	cube = new Mesh("model/cube.obj");
+	cube = Mesh::Cube();
 	cube->transform->Scale(glm::vec3(1));
 	// Rendering quad.
 	quad = new Mesh(SimpleShapes::Quad(2.f));
@@ -142,6 +142,8 @@ void Graphics::voxelConeTracing()
 	glCullFace(GL_BACK);
 	glViewport(0, 0, w, h);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	albedoVoxel->activate(VCT_program, 0);
+	normalVoxel->activate(VCT_program, 1);
 	scene->uploadLight(VCT_program);
 	scene->render(VCT_program);
 }
