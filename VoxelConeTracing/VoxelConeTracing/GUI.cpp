@@ -12,18 +12,23 @@ void GUI::init()
 	ImGui_ImplGlut_Init();
 	lastTime = Timer::time;
 }
-
-int CalculateFPS() {
+float time_sec = 0.f;
+void GUI::CalculateFPS() {
 	float deltaTime = Timer::time - lastTime;
-	int fps = 1.f / deltaTime;
 	lastTime = Timer::time;
-	return fps;
+	time_sec += deltaTime;
+	if (time_sec > 1.f) {
+		FPS = 1.f / deltaTime;
+		time_sec = 0.f;
+	}
 }
+
 void GUI::render()
 {
 	ImGui_ImplGlut_NewFrame();
 	ImGui::Begin("Console");
-	std::string fps = "FPS:" + std::to_string(CalculateFPS());
+	CalculateFPS();
+	std::string fps = "FPS:" + std::to_string(FPS);
 	ImGui::Text(fps.c_str());
 	std::string help = "use wasd and qe to move, press m to release cursor";
 	ImGui::Text(help.c_str());

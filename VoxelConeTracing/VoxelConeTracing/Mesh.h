@@ -29,5 +29,9 @@ public:
 	void uploadTransformMatrix(GLuint program);
 	void render(GLuint program);
 	void draw();
+
+	static Mesh* Cube() {
+		return new Mesh("model/cube.obj");
+	}
 };
 

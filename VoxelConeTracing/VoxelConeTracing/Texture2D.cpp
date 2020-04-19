@@ -11,7 +11,7 @@ Texture2D::Texture2D(const std::string name, const std::string path)
 
 }
 
-Texture2D::Texture2D(const std::string name, int w, int h, GLenum magFilter, GLenum minFilter, GLint internalFormat, GLint format, GLint wrap)
+Texture2D::Texture2D(const std::string name, int w, int h, GLenum magFilter, GLenum minFilter, GLint internalFormat, GLint type, GLint wrap)
 {
     glGenTextures(1, &texture_id);
     glBindTexture(GL_TEXTURE_2D, texture_id);
@@ -20,7 +20,7 @@ Texture2D::Texture2D(const std::string name, int w, int h, GLenum magFilter, GLe
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h, 0, GL_RGBA, format, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h, 0, GL_RGBA, type, 0);
     /*glm::vec4 color(1);
     glClearTexImage(texture_id, 0, GL_RGBA, GL_FLOAT, &color);*/
     glGenerateMipmap(GL_TEXTURE_2D);

@@ -13,48 +13,51 @@ struct PointLight{
 	vec3 pos;
 	vec3 color;
 };
-uniform vec3 camPos;
-uniform Material material;
-uniform PointLight pointLights[MAX_LIGHT];
 
-layout(RGBA8) uniform image3D VoxelTexture;
+uniform PointLight pointLights[MAX_LIGHT];
+uniform Material material;
+
+layout(binding = 1, rgba8) uniform image3D albedoVoxel;
+layout(binding = 0, rgba16f) uniform image3D normalVoxel;
 
 in vec3 Pos;
 in vec3 Normal;
 in vec2 Tex_coord;
 
+vec3 PhongLightingDiffuse(PointLight light);
 bool isInsideCube(const vec3 p, float e) { return abs(p.x) < 1 + e && abs(p.y) < 1 + e && abs(p.z) < 1 + e; }
-vec3 PhongLightingModel(PointLight light);
 vec3 shift(vec3 p){ return 0.5*p + vec3(0.5); }
 void main(void)
 {   
 	if(!isInsideCube(Pos, 0)) discard;
-	vec3 lightColor = material.emissivity*material.diffuseColor;
-	for(int i = 0; i < pointLights.length(); i++){
-		lightColor += PhongLightingModel(pointLights[i]);
-	}
-	
-	vec4 fragcolor = vec4(lightColor,1);
+
 	
 	//store color to voxels
 	vec3 voxelPos = shift(Pos);
-	ivec3 dim = imageSize(VoxelTexture);
-	float alpha = pow(1 - material.transparency, 4); 
-	vec4 res = alpha * fragcolor;
-    imageStore(VoxelTexture, ivec3(dim * voxelPos), res);
+	ivec3 dim = imageSize(albedoVoxel);
+	//float alpha = pow(1 - material.transparency, 4); 
+	vec3 fragcolor = vec3(0);
+	for(int i = 0; i<pointLights.length();i++){
+		fragcolor += PhongLightingDiffuse(pointLights[i]);
+	}
+
+	ivec3 coord = ivec3(dim * voxelPos);
+	//store diffuse color
+	vec4 res = vec4(fragcolor, 1.0);
+    imageStore(albedoVoxel, coord, res);
+	//store normal
+	vec4 _n = imageLoad(normalVoxel, coord);
+	vec3 n_res = normalize(vec3(_n)+Normal);
+	imageStore(normalVoxel, coord, vec4(n_res,1.f));
 }
 
 float attenuation(float d){ return 1.f/(1.f+0.5f*d+0.5f*d*d); }
-vec3 PhongLightingModel(PointLight light){
+vec3 PhongLightingDiffuse(PointLight light){
 	vec3 l = light.pos - Pos;
 	float dist = length(l);
 	l = normalize(l);
 	float att = attenuation(dist);
-	vec3 v = normalize(camPos - Pos);
-	vec3 r = reflect(-l,Normal);
-
-	vec3 lightColor = 0.3f*material.diffuseColor + att*(material.diffuseColor*material.diffuseReflectivity*max(0,dot(Normal,l))
-		+ material.specularColor*material.specularReflectivity*pow(max(0,dot(r,v)),material.shiness));
+	vec3 lightColor = att*material.diffuseColor*material.diffuseReflectivity*(max(0,dot(Normal,l)));
 	return lightColor*light.color;
 }
 

@@ -8,7 +8,8 @@ class Texture3D
 public:
 	GLuint texture_id;
 	std::string texture_name;
-	Texture3D(const std::string name, int w, int h, int d);
+	Texture3D(const std::string name, int size, GLenum magFilter = GL_NEAREST, GLenum minFilter = GL_NEAREST,
+		GLint internalFormat = GL_RGBA, GLint type = GL_FLOAT, GLint wrap = GL_REPEAT);
 	Texture3D() {};
 
 	void activate(GLuint program, GLuint textureLoc);

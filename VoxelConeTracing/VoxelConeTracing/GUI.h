@@ -12,5 +12,8 @@ public:
 
 	void render();
 	GLuint test_tex;
+private:
+	int FPS;
+	void CalculateFPS();
 };
 
