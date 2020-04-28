@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "Timer.h"
 #include <string>
+#include "Setting.h"
 class GUI
 {
 public:
@@ -10,6 +11,7 @@ public:
 	~GUI();
 	void init();
 
+	Setting setting;
 	void render();
 	GLuint test_tex;
 private:

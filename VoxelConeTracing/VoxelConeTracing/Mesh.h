@@ -33,5 +33,8 @@ public:
 	static Mesh* Cube() {
 		return new Mesh("model/cube.obj");
 	}
+	static Mesh* Sphere() {
+		return new Mesh("model/sphere.obj");
+	}
 };
 

@@ -33,7 +33,7 @@ public:
 	
 	void render();
 private:
-	GLuint voxelSize = 64;
+	GLuint voxelSize = 128;
 	Texture3D *albedoVoxel, *normalVoxel;
 	void initVoxelization();
 	void Voxelization();

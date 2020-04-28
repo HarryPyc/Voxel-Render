@@ -11,7 +11,7 @@ class FPSController
 public:
 	FPSController(Camera *camera, int w, int h);
 	~FPSController();
-	float mouseSensitivity = 0.5f;
+	float mouseSensitivity = 0.3f;
 	float step = 0.05f;
 	float hor = 0, ver = 0, gravity = 0;
 	glm::vec3 right() { return glm::cross(cam->dir, cam->up); }

@@ -20,7 +20,7 @@ static Scene* initMainScene() {
 	scene->addMesh(quad1); scene->addMesh(quad2); scene->addMesh(quad3);
 	scene->addMesh(quad4); scene->addMesh(quad5); scene->addMesh(quad6);
 
-	Mesh* bunny = new Mesh(mesh_name,glm::vec3(0,-0.5,0),Material::Orange());
+	Mesh* bunny = new Mesh(mesh_name,glm::vec3(0.0,-1.0,-0.3),Material::Orange());
 	bunny->transform->Scale(glm::vec3(4.0));
 	scene->addMesh(bunny);
 
@@ -29,6 +29,13 @@ static Scene* initMainScene() {
 	cube->transform->Rotate(45, glm::vec3(0, 1, 0));
 	cube->transform->Translate(glm::vec3(0.5f, -0.7f, 0.0f));
 	scene->addMesh(cube);
+
+	//Mesh* cube2 = Mesh::Cube();
+	//cube2->transform->Scale(glm::vec3(0.2f, 0.2f, 0.2f));
+	//cube2->transform->Translate(glm::vec3(-0.5f, -0.8f, 0.3f));
+	//cube2->material = new Material(glm::vec3(1), glm::vec3(0.8), 0, 1, 0, 0, 15);
+	//scene->addMesh(cube2);
+
 
 	scene->addLight(new PointLight(glm::vec3(0, 0.5, 0.5)));
 

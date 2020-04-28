@@ -46,12 +46,12 @@ void main(void)
 	vec4 res = vec4(fragcolor, 1.0);
     imageStore(albedoVoxel, coord, res);
 	//store normal
-	vec4 _n = imageLoad(normalVoxel, coord);
-	vec3 n_res = normalize(vec3(_n)+Normal);
-	imageStore(normalVoxel, coord, vec4(n_res,1.f));
+//	vec4 _n = imageLoad(normalVoxel, coord);
+//	vec3 n_res = normalize(vec3(_n)+Normal);
+	imageStore(normalVoxel, coord, vec4(Normal,1.f));
 }
 
-float attenuation(float d){ return 1.f/(1.f+0.5f*d+0.5f*d*d); }
+float attenuation(float d){ return 1.f/(1.f+0.1f*d+0.1f*d*d); }
 vec3 PhongLightingDiffuse(PointLight light){
 	vec3 l = light.pos - Pos;
 	float dist = length(l);

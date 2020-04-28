@@ -1,7 +1,7 @@
 #version 450 core
 #define MAX_LIGHT 10
 #define STEP_LENGTH 0.005f
-#define INV_STEP_LENGTH (1.0f/STEP_LENGTH)
+
 struct PointLight{
 	vec3 pos;
 	vec3 color;
@@ -27,7 +27,7 @@ void main(void) {
 	vec3 origin = isInsideCube(camPos, 0.2f) ? camPos 
 	: texture(fbo_texture1, tex_coord).xyz;
 	vec3 dir = texture(fbo_texture0, tex_coord).xyz - origin;
-	const uint Steps = uint(INV_STEP_LENGTH * length(dir));
+	const uint Steps = uint(length(dir) / STEP_LENGTH);
 	dir = normalize(dir);
 
 	// Trace.
@@ -47,8 +47,7 @@ void main(void) {
 		}
 	} 
 	
-	fragcolor = vec4(albedo + PhongLightingSpecular(pos,normal), 1.0);
-	fragcolor.rgb = pow(fragcolor.rgb, vec3(1.0 / 2.2));
+	fragcolor = vec4(albedo, 1.0);
 	
 }
 float attenuation(float d){ return 1.f/(1.f+0.1f*d+0.1f*d*d); }

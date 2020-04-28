@@ -11,8 +11,6 @@ Graphics::~Graphics()
 void Graphics::init() {
 	glewInit();
 	RegisterCallback();
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
 
 	w = glutGet(GLUT_WINDOW_WIDTH);
@@ -35,18 +33,22 @@ void Graphics::render() {
 		isVoxelized = true;
 	}
 
-	//voxelVisualization();
-	voxelConeTracing();
-	gui->render();
+	if(gui->setting.renderMode)
+		voxelConeTracing();
+	else
+		voxelVisualization();
 
+	gui->render();
+	
     glutSwapBuffers();
 }
 
 void Graphics::initVoxelization()
 {
 	voxel_program = Shader::voxelizationShader()->program;
-	albedoVoxel = new Texture3D("albedoVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_RGBA, GL_FLOAT, GL_CLAMP_TO_BORDER);
-	normalVoxel = new Texture3D("normalVoxel", voxelSize, GL_NEAREST, GL_NEAREST, GL_RGBA16F, GL_FLOAT, GL_REPEAT);
+	albedoVoxel = new Texture3D("albedoVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_RGBA8, GL_FLOAT, GL_CLAMP_TO_BORDER);
+	normalVoxel = new Texture3D("normalVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_RGBA16F, GL_FLOAT, GL_CLAMP_TO_BORDER);
+	
 }
 void Graphics::Voxelization() {
 	glUseProgram(voxel_program);
@@ -137,11 +139,16 @@ void Graphics::initVoxelConeTracing()
 void Graphics::voxelConeTracing()
 {
 	glUseProgram(VCT_program);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glCullFace(GL_BACK);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glViewport(0, 0, w, h);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	gui->setting.upload(VCT_program);
 	albedoVoxel->activate(VCT_program, 0);
 	normalVoxel->activate(VCT_program, 1);
 	scene->uploadLight(VCT_program);

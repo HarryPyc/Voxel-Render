@@ -32,6 +32,14 @@ void GUI::render()
 	ImGui::Text(fps.c_str());
 	std::string help = "use wasd and qe to move, press m to release cursor";
 	ImGui::Text(help.c_str());
+	if (ImGui::Button("ChangeRenderMode"))
+		setting.renderMode = !setting.renderMode;
+	if (setting.renderMode) {
+		ImGui::SliderFloat("DirectDiffuse", &setting.directDiffuseFactor, 0, 1);
+		ImGui::SliderFloat("DirectSpecular", &setting.directSpecularFactor, 0, 1);
+		ImGui::SliderFloat("IndirectDiffuse", &setting.indirectDiffuseFactor, 0, 1);
+		ImGui::SliderFloat("IndirectSpecular", &setting.indirectSpecularFactor, 0, 1);
+	}
 	ImGui::End();
 	ImGui::Render();
 }

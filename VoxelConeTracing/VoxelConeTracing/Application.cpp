@@ -8,6 +8,7 @@ void passive(int x, int y);
 void special(int key, int x, int y);
 void motion(int x, int y);
 void mouse(int button, int state, int x, int y);
+void reshape(int w, int h);
 
 void Application::init(int argc, char** argv) {
 #if _DEBUG
@@ -15,7 +16,7 @@ void Application::init(int argc, char** argv) {
 #endif
 	glutInitContextVersion(4, 3);
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH );
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	window = glutCreateWindow(title);
@@ -33,6 +34,7 @@ void Application::init(int argc, char** argv) {
 	glutMotionFunc(motion);
 	glutPassiveMotionFunc(passive);
 	glutIdleFunc(idle);
+	glutReshapeFunc(reshape);
 }
 
 void Application::run() {
@@ -83,4 +85,9 @@ void motion(int x, int y) {
 void mouse(int button, int state, int x, int y) {
 	auto& app = Application::getInstance();
 	app.controller->mouse(button, state, x, y);
+}
+void reshape(int w, int h) {
+	auto& app = Application::getInstance();
+	app.graphics->w = w;
+	app.graphics->h = h;
 }

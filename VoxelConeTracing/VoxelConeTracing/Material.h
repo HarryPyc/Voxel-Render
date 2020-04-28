@@ -26,7 +26,7 @@ public:
 		glm::vec3 _diffuseColor = glm::vec3(1),
 		glm::vec3 _specularColor = glm::vec3(1),
 		float _diffuseReflectivity = 1.0f,
-		float _specularReflectivity = 1.0f,
+		float _specularReflectivity = 0.1f,
 		float _transparency = 0.0f,
 		float _emissivity = 0.0f,
 		float _shiness = 3.0f);
