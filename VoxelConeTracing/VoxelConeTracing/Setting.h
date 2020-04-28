@@ -4,9 +4,9 @@
 struct Setting {
 	bool renderMode = true;
 
-	float directDiffuseFactor = 0.8f;
-	float directSpecularFactor = 0.8f;
-	float indirectDiffuseFactor = 0.3f;
+	float directDiffuseFactor = 0.6f;
+	float directSpecularFactor = 1.0f;
+	float indirectDiffuseFactor = 0.5f;
 	float indirectSpecularFactor = 0.3f;
 
 	void upload(GLuint program);
