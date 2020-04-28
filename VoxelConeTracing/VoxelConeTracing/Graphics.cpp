@@ -12,7 +12,7 @@ void Graphics::init() {
 	glewInit();
 	RegisterCallback();
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_MULTISAMPLE);
 	w = glutGet(GLUT_WINDOW_WIDTH);
 	h = glutGet(GLUT_WINDOW_HEIGHT);
     initVoxelization();
