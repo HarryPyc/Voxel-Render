@@ -56,6 +56,7 @@ void main(void)
 	if(indirectSpecularFactor>0.f);
 		color += indirectSpecularFactor * TraceIndirectSpecular();
 
+	color = pow(color, vec3(2.2));
 	fragcolor = vec4(color, 1.0);
 //	fragcolor *= 0.5f;
 }

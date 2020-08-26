@@ -28,7 +28,6 @@ FBO::FBO(int texNum)
 void FBO::drawBuffer(int buffer)
 {
     glDrawBuffer(GL_COLOR_ATTACHMENT0 + buffer);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
 void FBO::drawBuffer(std::vector<int> buffers)

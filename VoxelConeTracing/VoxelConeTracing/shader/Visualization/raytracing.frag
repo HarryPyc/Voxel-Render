@@ -9,8 +9,9 @@ struct PointLight{
 uniform PointLight pointLights[MAX_LIGHT];
 uniform sampler2D fbo_texture0; //back texture
 uniform sampler2D fbo_texture1; //front texture
-uniform sampler3D albedoVoxel; 
-uniform sampler3D normalVoxel;
+
+layout(binding = 2, r32ui) coherent volatile uniform uimage3D albedoVoxel; 
+
 uniform vec3 camPos; 
 
 in vec2 tex_coord; 
@@ -18,7 +19,13 @@ out vec4 fragcolor;
 
 // get 3D texture coordinate.
 vec3 shift(vec3 p) { return 0.5f * p + vec3(0.5f); }
-
+vec4 convRGBA8ToVec4( uint val){
+	return vec4(float((val&0x000000FF)), float((val&0x0000FF00)>>8U), float((val&0x00FF0000)>>16U), float((val&0xFF000000)>>24U))/255.f;
+}
+uint convVec4ToRGBA8( vec4 val){
+	val *= 255.f;
+	return (uint(val.w)&0x000000FF)<<24U | (uint(val.z)&0x000000FF)<<16U | (uint(val.y)&0x000000FF) <<8U | ( uint(val.x)&0x000000FF);
+}
 bool isInsideCube(vec3 p, float e) { return abs(p.x) < 1 + e && abs(p.y) < 1 + e && abs(p.z) < 1 + e; }
 vec3 PhongLightingSpecular(vec3 p, vec3 n);
 
@@ -33,16 +40,16 @@ void main(void) {
 	// Trace.
 	vec3 albedo = vec3(0);
 	vec3 normal = vec3(0);
-	vec3 pos;
+	const ivec3 dim = imageSize(albedoVoxel);
 	for(int i = 0; i < Steps; i++) {
 		const vec3 currentPoint = origin + STEP_LENGTH * i * dir;
-		vec3 coordinate = shift(currentPoint);
-		vec4 albedoSample = textureLod(albedoVoxel, coordinate, 0.f);
-		vec4 normalSample = textureLod(normalVoxel, coordinate, 0.f);
-		if(albedoSample.a > 0.f){
+		ivec3 coordinate = ivec3(shift(currentPoint)*dim);
+		vec4 albedoSample = convRGBA8ToVec4(imageAtomicAdd(albedoVoxel, coordinate, 0));
+		
+		//vec4 normalSample = textureLod(normalVoxel, coordinate, 0.f);
+		if(albedoSample.a > 0.0f){
 			albedo = vec3(albedoSample);
-			normal = vec3(normalSample);
-			pos = currentPoint;
+			//normal = vec3(normalSample);
 			break;
 		}
 	} 
