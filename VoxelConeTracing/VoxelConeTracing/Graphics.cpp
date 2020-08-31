@@ -17,7 +17,7 @@ void Graphics::init() {
 	h = glutGet(GLUT_WINDOW_HEIGHT);
     initVoxelization();
 	initVoxelVisualization();
-	initVoxelConeTracing();
+	//initVoxelConeTracing();
 	scene = initMainScene();
     gui = new GUI();
 
@@ -29,8 +29,8 @@ void Graphics::render() {
     //clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (!isVoxelized) {
-		Voxelization();
 		isVoxelized = true;
+		Voxelization();
 	}
 
 	//if(gui->setting.renderMode)
@@ -39,17 +39,22 @@ void Graphics::render() {
 		voxelVisualization();
 
 	gui->render();
+
 	
     glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 void Graphics::initVoxelization()
 {
 	voxel_program = Shader::voxelizationShader()->program;
-	glUseProgram(voxel_program);
-	albedoVoxel = new Texture3D("albedoVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_R32UI, GL_FLOAT, GL_CLAMP_TO_BORDER);
-	//normalVoxel = new Texture3D("normalVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_R32UI, GL_FLOAT, GL_CLAMP_TO_BORDER);
-	
+	albedoVoxel = new Texture3D("albedoVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_R32UI, GL_CLAMP_TO_BORDER);
+	normalVoxel = new Texture3D("normalVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_R32UI, GL_CLAMP_TO_BORDER);
+	emissionVoxel = new Texture3D("emissionVoxel", voxelSize, GL_NEAREST, GL_LINEAR_MIPMAP_LINEAR, GL_R32UI, GL_CLAMP_TO_BORDER);
+
+	glBindImageTexture(0, albedoVoxel->texture_id, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
+	glBindImageTexture(1, emissionVoxel->texture_id, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
+	glBindImageTexture(2, normalVoxel->texture_id, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
 }
 void Graphics::Voxelization() {
 	glUseProgram(voxel_program);
@@ -60,14 +65,9 @@ void Graphics::Voxelization() {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
-	albedoVoxel->activate(voxel_program, 0);
-	glBindImageTexture(0, albedoVoxel->texture_id, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
-	//normalVoxel->activate(voxel_program, 1);
-	//glBindImageTexture(1, normalVoxel->texture_id, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
-
 	scene->uploadLight(voxel_program);
 	scene->render(voxel_program);
-	glGenerateMipmap(GL_TEXTURE_3D);
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 }
 
@@ -75,7 +75,7 @@ void Graphics::initVoxelVisualization()
 {
 	// Materials.
 	cubepos_program = Shader::CubePosShader()->program;
-	raytracing_program = Shader::RayTracingShader()->program;
+	raycasting_program = Shader::RayTracingShader()->program;
 	
 	// FBOs.
 	fbo = new FBO(2);
@@ -92,7 +92,6 @@ void Graphics::voxelVisualization()
 	glUseProgram(cubepos_program);
 	scene->cam->upload(cubepos_program);
 	// Settings.
-	glClearColor(0.35, 0.35, 0.35, 1.0);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 
@@ -112,25 +111,20 @@ void Graphics::voxelVisualization()
 
 	fbo->disable();
 
-	glUseProgram(raytracing_program);
-	scene->cam->upload(raytracing_program);
-	scene->uploadLight(raytracing_program);
+	glUseProgram(raycasting_program);
+	scene->cam->upload(raycasting_program);
+	scene->uploadLight(raycasting_program);
 	// Settings.
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
 	// Activate textures.
-	fbo->fbo_textures[0]->activate(raytracing_program, 0);
-	fbo->fbo_textures[1]->activate(raytracing_program, 1);
-
-	albedoVoxel->activate(raytracing_program, 2);
-	glBindImageTexture(2, albedoVoxel->texture_id, 0, GL_TRUE, 0, GL_READ_WRITE, GL_R32UI);
-	//normalVoxel->activate(raytracing_program, 3);
+	fbo->fbo_textures[0]->activate(raycasting_program, 0);
+	fbo->fbo_textures[1]->activate(raycasting_program, 1);
 
 	// Render 3D texture.
-	glViewport(0, 0, w, h);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	quad->render(raytracing_program);
+	quad->render(raycasting_program);
 }
 
 void Graphics::initVoxelConeTracing()
@@ -156,4 +150,5 @@ void Graphics::voxelConeTracing()
 	scene->uploadLight(VCT_program);
 	scene->render(VCT_program);
 }
+
 

@@ -5,23 +5,22 @@
 #define MAX_LEVEL 6.0f
 #define Vlength (2/128.f)
 struct Material {
-	vec3 diffuseColor;
-	float diffuseReflectivity;
-	vec3 specularColor;
-	float specularReflectivity;
-	float emissivity;
-	float transparency;
-	float shiness;
+	vec3 color;
+	vec3 emission;
+	float diffuseReflectivity, specularReflectivity, shiness;
 };
 struct PointLight{
 	vec3 pos;
 	vec3 color;
 };
 
+layout(binding = 0, r32ui) uniform coherent volatile uimage3D albedoVoxel;
+layout(binding = 1, r32ui) uniform coherent volatile uimage3D normalVoxel;
+layout(binding = 2, r32ui) uniform coherent volatile uimage3D emissionVoxel;
+
 uniform PointLight pointLights[MAX_LIGHT];
 uniform Material material;
-uniform sampler3D albedoVoxel;
-uniform sampler3D normalVoxel;
+
 uniform vec3 camPos;
 uniform	float directDiffuseFactor;
 uniform	float directSpecularFactor;

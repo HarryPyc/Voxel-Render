@@ -54,7 +54,7 @@ void display() {
 }
 
 void idle() {
-	glutPostRedisplay();
+	
 	const int time_ms = glutGet(GLUT_ELAPSED_TIME);
 	Timer::time = 0.001f * time_ms;
 }

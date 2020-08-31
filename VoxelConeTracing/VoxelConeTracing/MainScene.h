@@ -28,13 +28,14 @@ static Scene* initMainScene() {
 	cube->transform->Scale(glm::vec3(0.2f, 0.3f, 0.2f));
 	cube->transform->Rotate(45, glm::vec3(0, 1, 0));
 	cube->transform->Translate(glm::vec3(0.5f, -0.7f, 0.0f));
+	cube->material = new Material(glm::vec3(0.9f), glm::vec3(0.5f));
 	scene->addMesh(cube);
 
-	//Mesh* cube2 = Mesh::Cube();
-	//cube2->transform->Scale(glm::vec3(0.2f, 0.2f, 0.2f));
-	//cube2->transform->Translate(glm::vec3(-0.5f, -0.8f, 0.3f));
-	//cube2->material = new Material(glm::vec3(1), glm::vec3(0.8), 0, 1, 0, 0, 15);
-	//scene->addMesh(cube2);
+	Mesh* cube2 = Mesh::Cube();
+	cube2->transform->Scale(glm::vec3(0.05));
+	cube2->transform->Translate(glm::vec3(0,0.5,0));
+	cube2->material = new Material(glm::vec3(0.75f), glm::vec3(0.7f));
+	scene->addMesh(cube2);
 
 
 	scene->addLight(new PointLight(glm::vec3(0, 0.5, 0.5)));

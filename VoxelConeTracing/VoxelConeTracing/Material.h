@@ -3,33 +3,25 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 namespace {
-	const char* diffuseColorName = "material.diffuseColor";
-	const char* specularColorName = "material.specularColor";
-	const char* emissivityName = "material.emissivity";
-	const char* transparencyName = "material.transparency";
-	const char* specularReflectanceName = "material.specularReflectivity";
-	const char* diffuseReflectanceName = "material.diffuseReflectivity";
+	const char* colorName = "material.color";
+	const char* emissionName = "material.emission" ;
+	const char* specularReflectivityName = "material.specularReflectivity";
+	const char* diffuseReflectivityName = "material.diffuseReflectivity";
 	const char* shinessName = "material.shiness";
 }
 class Material
 {
 public:
-	glm::vec3 diffuseColor;
-	glm::vec3 specularColor;
-	float diffuseReflectivity;
-	float specularReflectivity;
-	float transparency;
-	float emissivity;
-	float shiness;
+	glm::vec3 color;
+	glm::vec3 emission;
+	float diffuseReflectivity, specularReflectivity, shiness;
 
 	Material(
-		glm::vec3 _diffuseColor = glm::vec3(1),
-		glm::vec3 _specularColor = glm::vec3(1),
-		float _diffuseReflectivity = 1.0f,
-		float _specularReflectivity = 0.1f,
-		float _transparency = 0.0f,
-		float _emissivity = 0.0f,
-		float _shiness = 3.0f);
+		glm::vec3 _color = glm::vec3(0.75f), 
+		glm::vec3 _emission = glm::vec3(0), 
+		float _diffuseReflectivity = 1.0f, 
+		float _specularReflectivity = 1.0f, 
+		float _shiness = 5.f);
 
 	void upload(GLuint program);
 
