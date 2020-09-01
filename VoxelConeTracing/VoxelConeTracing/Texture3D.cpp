@@ -12,7 +12,7 @@ Texture3D::Texture3D(const std::string name, int size, GLenum magFilter, GLenum 
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, minFilter);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, magFilter);
 	
-	glTexStorage3D(GL_TEXTURE_3D, 0, internalFormat, size, size, size);
+	glTexStorage3D(GL_TEXTURE_3D, 7, internalFormat, size, size, size);
 	//glTexImage3D(GL_TEXTURE_3D, 0, internalFormat, size, size, size, 0, GL_RGBA, type, 0);
 	glGenerateMipmap(GL_TEXTURE_3D);
 	glBindTexture(GL_TEXTURE_3D, 0);

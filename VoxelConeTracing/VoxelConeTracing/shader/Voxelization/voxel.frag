@@ -1,4 +1,4 @@
-#version 450 core
+#version 450 
 #define MAX_LIGHT 5
 struct Material {
 	vec3 color;

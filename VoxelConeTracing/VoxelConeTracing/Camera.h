@@ -18,7 +18,7 @@ public:
 	glm::mat4 getPerspectiveMatrix(int w, int h);
 	glm::mat4 getViewMatrix();
 	void upload(GLuint program);
-	Camera(glm::vec3 _pos = glm::vec3(0, 0, 2), glm::vec3 _target = glm::vec3(0, 0, 0),
+	Camera(glm::vec3 _pos = glm::vec3(0, 0, 1), glm::vec3 _target = glm::vec3(0, 0, 0),
 		glm::vec3 _up = glm::vec3(0, 1, 0));
 };
 
